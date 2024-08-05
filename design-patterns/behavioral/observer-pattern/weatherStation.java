@@ -2,10 +2,11 @@ import java.util.HashSet;
 
 public class weatherStation {
     public static void main(String[] args){
-        IObserver a = new WeatherObserver(0);
-        IObserver b = new WeatherObserver(1);
-        IObserver c = new WeatherObserver(2);
         IObservable broadcast = new WeatherObservable();
+        IObserver a = new WeatherObserver(0, broadcast);
+        IObserver b = new WeatherObserver(1, broadcast);
+        IObserver c = new WeatherObserver(2 ,broadcast);
+        
         broadcast.setData("10 degrees");
         broadcast.register(a);
         broadcast.setData("20 degrees");
@@ -26,15 +27,17 @@ interface IObservable{
 
 }
 interface IObserver{
-    public void Update(IObservable observable);
+    public void Update();
 }
 class WeatherObserver implements IObserver{
     private int id;
-    public WeatherObserver(int id){
+    private IObservable observable;
+    public WeatherObserver(int id, IObservable observable){
         this.id = id;
+        this.observable = observable;
     }
     @Override
-    public void Update(IObservable observable) {
+    public void Update() {
         System.out.println("New data received by : "  + id + ": "  + observable.getData());
     }
     
@@ -60,7 +63,7 @@ class  WeatherObservable  implements IObservable{
     @Override
     public void sendNotify() {
        for(IObserver ob : set){
-        ob.Update(this);
+        ob.Update();
        }
     }
     @Override
