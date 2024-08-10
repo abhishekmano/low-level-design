@@ -1,9 +1,11 @@
 public class PizzaAbstract {
     public static void main(String[] args){
         PizzaStore store = new NYPizzaStore();
-        store.createPizza("cheese");
+        Pizza pizza = store.createPizza("cheese");
+        pizza.prepare();
         store = new Chicago();
-        store.createPizza("cheese");
+        pizza = store.createPizza("cheese");
+        pizza.prepare();
     }
 }
 
@@ -32,10 +34,10 @@ class Chicago extends PizzaStore {
        new ChicagoIngredientFactory();
        if (item.equals("cheese")) {
            pizza = new CheesePizza(ingredientFactory);
-           pizza.setName("New York Style Cheese Pizza");
+           pizza.setName("Chicago Style Cheese Pizza");
        } else if (item.equals("onion")) {
            pizza = new OnionPizza(ingredientFactory);
-           pizza.setName("New York Style Veggie Pizza");
+           pizza.setName("Chicago Style Veggie Pizza");
        } 
        return pizza;
    }
