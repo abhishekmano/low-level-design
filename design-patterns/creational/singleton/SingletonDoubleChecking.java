@@ -9,7 +9,8 @@ public class SingletonDoubleChecking {
 }
 class Singleton{
     private static int count = 0;
-    private static Singleton uniqueInstance = null;
+    //make sure that change made by one thread is visible to others immediately
+    private volatile static Singleton uniqueInstance = null;
     private Singleton(){
         count++;
     }
