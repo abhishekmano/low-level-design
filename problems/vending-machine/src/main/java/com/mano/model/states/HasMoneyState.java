@@ -6,26 +6,25 @@ import com.mano.model.ProductGroup;
 import com.mano.model.VendingMachine;
 import com.mano.model.currency.currency;
 
-public class IdleState implements IState {
+public class HasMoneyState implements IState{
     private VendingMachine vendingMachine;
-    public IdleState(VendingMachine vendingMachine){
+    public HasMoneyState(VendingMachine vendingMachine){
         this.vendingMachine = vendingMachine;
     }
     @Override
     public void selectProduct(ProductGroup product, int count) {
-        
+        vendingMachine.setSelectedProduct(product );
+        vendingMachine.setSelectedCount(count);
     }
 
     @Override
     public void insertMoney(currency currency) {
-        System.out.println("Please insert money after clicking insert button");
-        
+       vendingMachine.getCurrencyManager().insertMoney(currency);
     }
 
     @Override
     public void dispense() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'dispense'");
+        //
     }
 
     @Override
@@ -40,12 +39,12 @@ public class IdleState implements IState {
     }
     @Override
     public void insertMoneyButton() {
-        vendingMachine.setState(new HasMoneyState(vendingMachine));
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insertMoneyButton'");
     }
     @Override
     public void selectProductButton() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectProductButton'");
+        vendingMachine.setState(new SelectionState(vendingMachine));
     }
     
 }
