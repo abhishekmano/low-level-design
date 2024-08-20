@@ -4,5 +4,11 @@ import lombok.Data;
 
 @Data
 public class Like {
-    private User LikedBy;
+    private User likedBy;
+    public Like(User user){
+        likedBy = user;
+    }
+    public void display(){
+        System.out.println("\t Liked By " +  likedBy.getUserName());
+    }
 }

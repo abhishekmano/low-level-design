@@ -18,6 +18,12 @@ public class Answer implements Commendable , Likable{
         likes = new LinkedList<>();
         comments = new LinkedList<>();
     }
+    public Answer(String title , String description , User author){
+        this();
+        this.title = title;
+        this.author = author;
+        this.description = description;
+    }
     @Override
     public void addLike(Like like) {
         likes.addLast(like);
@@ -25,5 +31,15 @@ public class Answer implements Commendable , Likable{
     @Override
     public void addComment(Comment comment) {
        comments.addLast(comment);
+    }
+    public void display(){
+        System.out.println(title + "   " + author.getUserName() );
+        System.out.println("\t" + description);
+        for (Like like : likes) {
+            like.display();
+        }
+        for (Comment comment : comments) {
+            comment.display();
+        }
     }
 }
