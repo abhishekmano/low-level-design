@@ -12,11 +12,9 @@ public class EqualSplitStrategy implements SplitStrategy {
         int total = splits.size();
         double perUserSplit = amount/total;
         User owner = expense.getPaidBy();
-        for(int idx = 0 ; idx < total ; ++idx){
-            
-            Split split = splits.get(idx);
+        for (Split split : splits) {
             split.setAmount(perUserSplit);
-            if(split.getUser() != owner){
+            if (split.getUser() != owner) {
                 owner.getBalanceSheet().addNewGetBack(split);
                 split.getUser().getBalanceSheet().addNewOwe(split, owner);
             }

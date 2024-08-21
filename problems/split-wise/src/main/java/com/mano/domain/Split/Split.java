@@ -13,6 +13,16 @@ public class Split {
     public Split(){
 
     }
+    public Split(int id ,User user ){
+        this.id = id;
+        this.user = user;
+    }
+    public Split(int id ,User user , int percentage ){
+        this.id = id;
+        this.user = user;
+        this.percentage = percentage;
+    }
+
     public Split(int id ,User user , double amount ){
         this.id = id;
         this.user = user;

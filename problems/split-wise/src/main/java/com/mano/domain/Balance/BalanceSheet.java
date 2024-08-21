@@ -9,26 +9,40 @@ import lombok.Data;
 
 @Data
 public class BalanceSheet {
-    private HashMap<User, Balance> balances ;
-    private int totalOwe;
-    private int totalGetBack;
+    private HashMap<Integer, Balance> balances ;
+    private double totalOwe;
+    private double totalGetBack;
     public BalanceSheet(){
+        totalGetBack = 0;
+        totalOwe = 0;
         balances = new HashMap<>();
     }
     public void addNewOwe(Split split, User owner){
-        if(!balances.containsKey(owner)){
-            Balance newBalance = new Balance();
-            balances.put(owner, newBalance);
+        try{
+            if(!balances.containsKey(owner.getUserId())){
+                Balance newBalance = new Balance();
+                balances.put(owner.getUserId(), newBalance);
+            }
+            Balance ownerBalance = balances.get(owner.getUserId());
+            balances.get(owner.getUserId()).addToOwe(split.getAmount());
+            totalOwe += split.getAmount();
         }
-        balances.get(owner).addToOwe(split.getAmount());
-        totalOwe += split.getAmount();
+        catch(Exception ex){
+            //handle
+
+        }
+        
     }
     public void addNewGetBack(Split split){
-        if(!balances.containsKey(split.getUser())){
+        if(!balances.containsKey(split.getUser().getUserId())){
             Balance newBalance = new Balance();
-            balances.put(split.getUser(), newBalance);
+            balances.put(split.getUser().getUserId(), newBalance);
         }
-        balances.get(split.getUser()).addToGetBack(split.getAmount());
+        balances.get(split.getUser().getUserId()).addToGetBack(split.getAmount());
         totalGetBack += split.getAmount();
+    }
+    public void display(){
+        System.out.println("Owes: " + totalOwe );
+        System.out.println("Getback: " + totalGetBack );
     }
 }

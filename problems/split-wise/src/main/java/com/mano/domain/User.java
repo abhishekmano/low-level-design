@@ -14,8 +14,13 @@ public class User {
         balanceSheet = new BalanceSheet();
     }
     public User(int id , String userName , String userMail){
+        this();
         this.userId = id;
         this.userName = userName;
         this.userMail = userMail;
+    }
+    public void display(){
+        System.out.println("Balance Sheet of " + userName);
+        balanceSheet.display();
     }
 }
