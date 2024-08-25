@@ -54,7 +54,19 @@ public class ElevatorController {
         return true;
     }
     public void control(){
+        Direction liftDirection = elevator.getDirection();
+        if(liftDirection == Direction.UP){
+            if(goUp.size() == 0){
+                elevator.setDirection(Direction.DOWN);
+                while(pendingJobs.size() != 0){
+                    goUp.add(pendingJobs.remove());
+                }
+                
+            }
+        }
+        else{
 
+        }
     }
 
 }
