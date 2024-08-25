@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class TopicHandler {
-    public Topic topic;    
+    private Topic topic;    
     private HashMap<String,SubscriberWorker> subscriberWorkers;
     public TopicHandler(Topic topic){
         this.topic = topic;
@@ -25,6 +25,7 @@ public class TopicHandler {
         if(!subscriberWorkers.containsKey(subId)){
             SubscriberWorker subscriberWorker = new SubscriberWorker(topic, subscriber);
             subscriberWorkers.put(subId , subscriberWorker);
+            new Thread(subscriberWorker).start();
         }
         SubscriberWorker worker = subscriberWorkers.get(subId);
         worker.wakeUpIfNeeded();

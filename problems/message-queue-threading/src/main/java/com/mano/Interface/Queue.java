@@ -27,7 +27,18 @@ public class Queue {
 
     }
     public void publish(Topic topic , Message message){
-
+        topic.addMessage(message);
+        System.out.println(message.getMessage() + " Published to the topic :"  + topic.getTopicName());
+        new Thread(()-> processor.get(topic.getId()).publish()).start();
+    }
+    public void resetOffset(Topic topic, ISubscriber subscriber, int newOffset){
+        for(TopicSubscriber topicSub : topic.getSubscribers()){
+            if(subscriber.equals(topicSub.getSubscriber())){
+                topicSub.getOffset().set(newOffset);
+                System.out.println(topicSub.getSubscriber().getId() + " offset reset to " + newOffset );
+                new Thread(()-> processor.get(topic.getId()).startSubscriberWorker(topicSub)).start();
+            }
+        }
     }
 
 }
